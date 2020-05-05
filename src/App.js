@@ -4,10 +4,28 @@ import CompleteUsers from "./components/CompleteUsers";
 import IncompleteUsers from "./components/IncompleteUSers";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
+import { getUsers } from "./helper/apiCalls";
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      completeUsers: null,
+      inCompleteUsers: null,
+      
+    };
+  }
 
+  componentDidMount() {
+    getUsers((users)=>{
+      this.setState({
+        completeUsers: users[0],
+        inCompleteUsers: users[1],
+        
+      })
 
-  
+    });
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -17,7 +35,7 @@ class App extends Component {
             <div className="col-md-8">
               <Switch>
                 <Route exact path="/">
-                <Home/>
+                  <Home />
                 </Route>
 
                 <Route path="/completeids">
