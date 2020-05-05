@@ -10,36 +10,54 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      completeUsers: null,
-      inCompleteUsers: null,
-      userToUpdate:null,
+      users : [],
+      userToUpdate: null,
     };
   }
 
-  loadUser = (user)=>{
-    let newState = {...this.state}
-    newState.userToUpdate  = user
+  loadUser = (user) => {
+    let newState = { ...this.state };
+    newState.userToUpdate = user;
     this.setState({
-      ...newState
-    })
-  }
+      ...newState,
+    });
+  };
 
-  deleteUser = (uuidToDelete,list_name)=>{
-    let newState= {...this.state}
-    newState[list_name] = newState[list_name].filter((user)=>user.login.uuid!==uuidToDelete)
+  updateUser = (userDetails) => {
+    let newState = { ...this.state };
+
+    for (let i = 0; i < newState.users.length; i++) {
+      if (newState.users[i].login.uuid === userDetails.login.uuid) {
+        newState.users[i] = userDetails;
+        break;
+      }
+    }
+
     this.setState({
-      ...newState
-    })
+      ...newState,
+    });
 
-  }
+ 
+  };
+
+  deleteUser = (uuidToDelete) => {
+    let newState = { ...this.state };
+    newState.users = newState.users.filter(
+      (user) => user.login.uuid !== uuidToDelete
+    );
+
+    this.setState({
+      ...newState,
+      userToUpdate:null
+    });
+  };
 
   
 
   componentDidMount() {
     getUsers((users) => {
       this.setState({
-        completeUsers: users[0],
-        inCompleteUsers: users[1],
+        users:users
       });
     });
   }
@@ -47,9 +65,9 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="container-fluid h-100">
-          <Navbar />
-          <div className="row h-100">
+        <div className="container-fluid ">
+          <Navbar changeType={this.changeType}/>
+          <div className="row ">
             <div className="col-md-8 border">
               <Switch>
                 <Route exact path="/">
@@ -57,19 +75,28 @@ class App extends Component {
                 </Route>
 
                 <Route path="/completeids">
-                  <CompleteUsers completeUsers={this.state.completeUsers} loadUser={this.loadUser} deleteUser={this.deleteUser}/>
+                  <CompleteUsers
+                    users={this.state.users}
+                    loadUser={this.loadUser}
+                    deleteUser={this.deleteUser}
+                  />
                 </Route>
                 <Route path="/incompleteids">
                   <IncompleteUsers
-                    inCompleteUsers={this.state.inCompleteUsers}
+                    users={this.state.users}
                     loadUser={this.loadUser}
                     deleteUser={this.deleteUser}
                   />
                 </Route>
               </Switch>
             </div>
-            <div className="col-md-4">{this.state.userToUpdate? <UpdateUser userToUpdate={this.state.userToUpdate}/> :"Select user to update"}</div>
-
+            <div className="col-md-4">
+              {this.state.userToUpdate ? (
+                <UpdateUser userToUpdate={this.state.userToUpdate} updateUser={this.updateUser}/>
+              ) : (
+                <h1>Click on name of user to update details</h1>
+              )}
+            </div>
           </div>
         </div>
       </BrowserRouter>

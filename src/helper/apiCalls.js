@@ -6,8 +6,13 @@ export const getUsers = (next)=>{
         let usersFromServer = response.data.results;
         
         let users = []
-        users[0] = usersFromServer.slice(0,50)
-        users[1] = usersFromServer.slice(50)
+        let incompleteUsers = usersFromServer.slice(0,50)
+        incompleteUsers.forEach((user)=>{
+            user.picture =null
+        })
+        let completeUsers =   usersFromServer.slice(50)
+        users = [...incompleteUsers,...completeUsers]
+        console.log(users)
         next(users)
 
     })

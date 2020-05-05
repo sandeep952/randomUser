@@ -1,6 +1,6 @@
 import React from "react";
 
-const User = ({ user, picture,loadUser,deleteUser,type }) => {
+const User = ({ user, picture,loadUser,deleteUser }) => {
   return (
     <div  className="col-md-6 col-lg-4">
       <div className="card ml-2 my-4">
@@ -10,7 +10,7 @@ const User = ({ user, picture,loadUser,deleteUser,type }) => {
           alt="user image"
         />
         <div className="card-body">
-          <h5 className="card-title">{`${user.name.first} ${user.name.last}`}</h5>
+          <h5 className="card-title" onClick={()=>loadUser(user)}>{`${user.name.first} ${user.name.last}`}</h5>
           <div className="card-text">
 
 
@@ -28,7 +28,7 @@ const User = ({ user, picture,loadUser,deleteUser,type }) => {
               <p> {user.phone}</p>
             </div>
 
-            <div className="btn btn-danger" onClick={()=>deleteUser(user.login.uuid,type)}>
+            <div className="btn btn-danger" onClick={()=>deleteUser(user.login.uuid)}>
             Delete
             </div>
           </div>

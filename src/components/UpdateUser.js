@@ -10,6 +10,18 @@ class UpdateUser extends Component {
       }
   }
 
+  componentDidUpdate = (prevProps)=>{
+    if(this.props != prevProps){
+      this.setState({
+          email: this.props.userToUpdate.email,
+          age: this.props.userToUpdate.dob.age,
+          phone: this.props.userToUpdate.phone,
+      })
+    }
+  }
+
+  
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -18,7 +30,13 @@ class UpdateUser extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
+    const {email ,age,phone} = this.state;
+    let updatedUser = {...this.props.userToUpdate}
+    updatedUser.email = email;
+    updatedUser.dob.age = age;
+    updatedUser.phone = phone;
+    this.props.updateUser(updatedUser )
+    
     this.setState({
       email: "",
       age: "",
@@ -30,7 +48,7 @@ class UpdateUser extends Component {
     return (
       <div className="row">
         <form className="col-md-6 offset-md-3 my-5">
-          
+          <h1>Update details here</h1>
           <div className="form-group">
             <label> Email</label>
             <input
@@ -38,6 +56,7 @@ class UpdateUser extends Component {
               type="text"
               className="form-control"
               required
+              autoFocus
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleChange.bind(this)}
