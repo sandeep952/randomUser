@@ -6,7 +6,13 @@ const CompleteUsers = (props) => {
     <div className="row">
       {props.completeUsers ? (
         props.completeUsers.map((user) => (
-          <User key={user.login.uuid} user={user} picture={user.picture} />
+          <User
+            key={user.login.uuid}
+            type="completeUsers"
+            user={user}
+            loadUser={props.loadUser}
+            deleteUser={props.deleteUser}
+          />
         ))
       ) : (
         <h1>Loading</h1>

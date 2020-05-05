@@ -1,8 +1,8 @@
 import React from "react";
 
-const User = ({ user, picture }) => {
+const User = ({ user, picture,loadUser,deleteUser,type }) => {
   return (
-    <div className="col-md-6 col-lg-4">
+    <div  className="col-md-6 col-lg-4">
       <div className="card ml-2 my-4">
         <img
           className="card-img-top"
@@ -25,9 +25,12 @@ const User = ({ user, picture }) => {
 
             <div>
               <span className="badge badge-secondary">Phone :</span>
-              <p> {user.cell}</p>
+              <p> {user.phone}</p>
             </div>
 
+            <div className="btn btn-danger" onClick={()=>deleteUser(user.login.uuid,type)}>
+            Delete
+            </div>
           </div>
         </div>
       </div>
