@@ -7,8 +7,12 @@ const IncompleteUsers = (props) => {
       <div className="row">
         {props.inCompleteUsers ? (
           props.inCompleteUsers.map((user) => (
-            <User key={user.login.uuid} user={user}  
-            deleteUser={props.deleteUser} />
+            <User
+              key={user.login.uuid}
+              user={user}
+              type="inCompleteUsers"
+              deleteUser={props.deleteUser}
+            />
           ))
         ) : (
           <h1>Loading</h1>
