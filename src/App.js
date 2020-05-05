@@ -3,15 +3,23 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import CompleteUsers from "./components/CompleteUsers";
 import IncompleteUsers from "./components/IncompleteUSers";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home";
 class App extends Component {
+
+
+  
   render() {
     return (
       <BrowserRouter>
         <div className="container">
-        <Navbar/>
+          <Navbar />
           <div className="row">
             <div className="col-md-8">
               <Switch>
+                <Route exact path="/">
+                <Home/>
+                </Route>
+
                 <Route path="/completeids">
                   <CompleteUsers />
                 </Route>
