@@ -29,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="container">
+        <div className="container-fluid">
           <Navbar />
           <div className="row">
             <div className="col-md-8">
@@ -39,10 +39,10 @@ class App extends Component {
                 </Route>
 
                 <Route path="/completeids">
-                  <CompleteUsers />
+                  <CompleteUsers completeUsers={this.state.completeUsers} />
                 </Route>
                 <Route path="/incompleteids">
-                  <IncompleteUsers />
+                  <IncompleteUsers inCompleteUsers={this.state.inCompleteUsers}/>
                 </Route>
               </Switch>
             </div>
