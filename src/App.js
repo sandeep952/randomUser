@@ -6,11 +6,12 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import { getUsers } from "./helper/apiCalls";
 import UpdateUser from "./components/UpdateUser";
+import './App.css'
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      users : [],
+      users: [],
       userToUpdate: null,
     };
   }
@@ -36,8 +37,6 @@ class App extends Component {
     this.setState({
       ...newState,
     });
-
- 
   };
 
   deleteUser = (uuidToDelete) => {
@@ -48,16 +47,14 @@ class App extends Component {
 
     this.setState({
       ...newState,
-      userToUpdate:null
+      userToUpdate: null,
     });
   };
-
-  
 
   componentDidMount() {
     getUsers((users) => {
       this.setState({
-        users:users
+        users: users,
       });
     });
   }
@@ -66,33 +63,38 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container-fluid ">
-          <Navbar changeType={this.changeType}/>
+          <Navbar changeType={this.changeType} />
           <div className="row ">
             <div className="col-md-8 border">
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
+              <div className="users-view">
+                <Switch>
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
 
-                <Route path="/completeids">
-                  <CompleteUsers
-                    users={this.state.users}
-                    loadUser={this.loadUser}
-                    deleteUser={this.deleteUser}
-                  />
-                </Route>
-                <Route path="/incompleteids">
-                  <IncompleteUsers
-                    users={this.state.users}
-                    loadUser={this.loadUser}
-                    deleteUser={this.deleteUser}
-                  />
-                </Route>
-              </Switch>
+                  <Route path="/completeids">
+                    <CompleteUsers
+                      users={this.state.users}
+                      loadUser={this.loadUser}
+                      deleteUser={this.deleteUser}
+                    />
+                  </Route>
+                  <Route path="/incompleteids">
+                    <IncompleteUsers
+                      users={this.state.users}
+                      loadUser={this.loadUser}
+                      deleteUser={this.deleteUser}
+                    />
+                  </Route>
+                </Switch>
+              </div>
             </div>
             <div className="col-md-4">
               {this.state.userToUpdate ? (
-                <UpdateUser userToUpdate={this.state.userToUpdate} updateUser={this.updateUser}/>
+                <UpdateUser
+                  userToUpdate={this.state.userToUpdate}
+                  updateUser={this.updateUser}
+                />
               ) : (
                 <h1>Click on name of user to update details</h1>
               )}
